@@ -1,24 +1,13 @@
-import errorMessages from '../../errorMessages.json'
-
+import errorMessages from "../../errorMessages.json";
 
 const ErrorMessage = ({ error }) => {
+  function getErrorMessage() {
+    if (error === null) return null;
 
+    return errorMessages[error.code];
+  }
 
-    function getErrorMessage() {
-        if (error === null)
-            return null;
-        
-        return errorMessages[error.code];
-    }
-
-    return(
-
-        <div>
-            {getErrorMessage()}    
-        </div>
-
-    );
-
-}
+  return <div>{getErrorMessage()}</div>;
+};
 
 export default ErrorMessage;
