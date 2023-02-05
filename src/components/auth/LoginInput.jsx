@@ -1,39 +1,33 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
+import firebase from 'firebase/compat/app';
 
-const Login = ({ setUser }) => {
-    const navigate = useNavigate();
+
+const Login = ({ setUser, setAuthMessage }) => {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
   
     const login = async () => {
-      try {
-        const user = await signInWithEmailAndPassword(
-          auth,
-          loginEmail,
-          loginPassword
-        );
-        console.log(user);
-        setUser(user);
-        navigate("/dashboard");
-      } catch (error) {
-        console.log(error.message);
-      }
+      firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
+        .then((user) => {
+          setUser(user);
+        })
+        .catch((error) => {
+          setAuthMessage(error.message);
+        });
     };
   
     return (
       <div>
         <h3> Login </h3>
         <input
-          placeholder="Email..."
+          placeholder="Email"
           onChange={(event) => {
             setLoginEmail(event.target.value);
           }}
         />
         <input
-          placeholder="Password..."
+          type="password"
+          placeholder="Password"
           onChange={(event) => {
             setLoginPassword(event.target.value);
           }}

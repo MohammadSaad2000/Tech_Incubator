@@ -1,11 +1,18 @@
+import SignOut from "./SignOut";
+import 'firebase/compat/auth';
 
-
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, logout }) => {
 
     return(
-
+        
         <div>
-            This is the dashboard page. User logged in: {user.email}
+            <div>
+                This is the dashboard page.
+            </div>
+            <div>
+                <SignOut user={user} logout={logout}/>
+            </div>
+            
         </div>
 
     );
