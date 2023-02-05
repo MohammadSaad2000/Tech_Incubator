@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ErrorPage from './components/auth/AuthPage';
+import AuthPage from './components/auth/AuthPage';
 import Dashboard from './components/dashboard/Dashboard';
 import { useNavigate } from "react-router-dom";
-import firebase from 'firebase/compat/app';
+import { auth } from "./firebase-config";
+import {
+  onAuthStateChanged,
+  signOut
+} from "firebase/auth";
 
 function App() {
 
-  const [authMessage, setAuthMessage] = useState(null);
+  const [error, setError] = useState(null);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     
-    firebase.auth().onAuthStateChanged((currentUser) => {
+    onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         sessionStorage.setItem('loggedIn', true);
       } else {
@@ -31,13 +35,13 @@ function App() {
   }, [user, navigate]);
 
   const logout = async () => {
-    await firebase.auth().signOut();
+    await signOut(auth);
   };
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element ={<ErrorPage setUser={setUser} setAuthMessage={setAuthMessage} authMessage={authMessage} />}/>
+        <Route path="/" element ={<AuthPage setUser={setUser} setError={setError} error={error} />}/>
         <Route path="/dashboard" element ={<Dashboard user={user} logout={logout}/>}/>
       </Routes>
     </div>

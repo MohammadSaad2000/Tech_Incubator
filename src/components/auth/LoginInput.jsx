@@ -1,18 +1,22 @@
 import { useState } from "react";
-import firebase from 'firebase/compat/app';
+import { auth } from "../../firebase-config";
+import {
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 
-const Login = ({ setUser, setAuthMessage }) => {
+const LoginInput = ({ setUser, setError }) => {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
   
     const login = async () => {
-      firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
-        .then((user) => {
-          setUser(user);
+      signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+        .then((userCredential) => {
+          setUser(userCredential.user);
         })
         .catch((error) => {
-          setAuthMessage(error.message);
+          console.log(error.code);
+          setError(error);
         });
     };
   
@@ -37,4 +41,4 @@ const Login = ({ setUser, setAuthMessage }) => {
     );
   };
 
-  export default Login;
+  export default LoginInput;

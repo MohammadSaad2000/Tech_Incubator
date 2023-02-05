@@ -1,23 +1,24 @@
-const AuthMessage = ({ authMessage }) => {
+import errorMessages from '../../errorMessages.json'
 
 
-    function getFormattedAuthMessage() {
-        if (authMessage === null) 
+const ErrorMessage = ({ error }) => {
+
+
+    function getErrorMessage() {
+        if (error === null)
             return null;
-
-        let msg = authMessage.replace("Firebase: ", "");
-        msg = msg.substring(0, msg.lastIndexOf(" ("));
-        return msg;
+        
+        return errorMessages[error.code];
     }
 
     return(
 
         <div>
-            {getFormattedAuthMessage()}    
+            {getErrorMessage()}    
         </div>
 
     );
 
 }
 
-export default AuthMessage;
+export default ErrorMessage;

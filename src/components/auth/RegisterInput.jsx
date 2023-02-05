@@ -1,7 +1,8 @@
 import { useState } from "react";
-import firebase from 'firebase/compat/app';
+import { auth } from "../../firebase-config"; 
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const Register = ({ setUser, setAuthMessage }) => {
+const RegisterInput = ({ setUser, setError }) => {
     const [companyName, setCompanyName] = useState(null);
     const [userType, setUserType] = useState("student");
     const [registerEmail, setRegisterEmail] = useState("");
@@ -9,13 +10,12 @@ const Register = ({ setUser, setAuthMessage }) => {
   
     const register = async () => {
 
-      firebase.auth().createUserWithEmailAndPassword(registerEmail, registerPassword)
-        .then((user) => {
-          console.log(user);
-          setUser(user);
+      createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+        .then((userCredential) => {
+          setUser(userCredential.user);
         })
         .catch((error) => {
-          setAuthMessage(error.message);
+          setError(error);
         });
 
     };
@@ -66,5 +66,5 @@ const Register = ({ setUser, setAuthMessage }) => {
     );
   };
 
-  export default Register;
+  export default RegisterInput;
 

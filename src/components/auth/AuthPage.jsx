@@ -1,15 +1,15 @@
 import LoginInput from "./LoginInput";
 import RegisterInput from "./RegisterInput";
-import AuthMessage from "./ErrorMessage"
+import ErrorMessage from "./ErrorMessage"
 
-const ErrorPage = ({ setUser, setAuthMessage, authMessage }) => {
+const AuthPage = ({ setUser, setError, error }) => {
     return (
         <div>
-            <LoginInput setUser={setUser} setAuthMessage={setAuthMessage}/>
-            <RegisterInput setUser={setUser} setAuthMessage={setAuthMessage}/>
-            <AuthMessage authMessage={authMessage}/>
+            <LoginInput setUser={setUser} setError={setError}/>
+            <RegisterInput setUser={setUser} setError={setError}/>
+            <ErrorMessage error={error}/>
         </div>
     );
 }
 
-export default ErrorPage;
+export default AuthPage;

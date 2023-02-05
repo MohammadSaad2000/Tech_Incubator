@@ -1,4 +1,5 @@
-import firebase from 'firebase/compat/app';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAyIL9dK_Ox2-4Ot2KCaFUXEzAN7ueFv7M",
@@ -10,7 +11,6 @@ const firebaseConfig = {
     measurementId: "G-G5KWX7TXL5"
   };
 
-export default function initializeFirebase() {
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  }
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

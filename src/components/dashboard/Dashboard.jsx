@@ -1,5 +1,4 @@
 import SignOut from "./SignOut";
-import 'firebase/compat/auth';
 
 const Dashboard = ({ user, logout }) => {
 
