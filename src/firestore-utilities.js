@@ -6,10 +6,10 @@ import {
   getDocs,
   query,
   collection,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
-export function getTaskDB(task_id) {}
-export function getCompanyDB(user) {}
 export async function getStudentDB(user) {
   const docRef = doc(db, "students", user.uid);
   const docSnap = await getDoc(docRef);
@@ -19,13 +19,24 @@ export async function getStudentDB(user) {
     return null;
   }
 }
-export function isCompanyDB(user) {}
 
 export function isTaskCompletedDB(student, task) {
-  let isCompleted = student.completedTasks.find((completedTaskId) => {
-    return completedTaskId === task.id;
+  if (student.taskSubmissions === undefined) return false;
+  let isCompleted = student.taskSubmissions.find((taskSubmission) => {
+    return taskSubmission.taskId === task.id;
   });
-  return isCompleted ? "Completed" : "Incomplete";
+  return isCompleted !== null && isCompleted !== undefined;
+}
+
+export async function submitTask(user, task, submissionLink) {
+  const studentRef = doc(db, "students", user.uid);
+  let taskID = task.id;
+  await updateDoc(studentRef, {
+    taskSubmissions: arrayUnion({
+      taskId: task.id,
+      submission: submissionLink,
+    }),
+  });
 }
 
 export function addCompanyDB(user, companyName) {
