@@ -67,7 +67,7 @@ const RegisterInput = ({ setUser, setError }) => {
         <option value="company">Company Manager</option>
       </select>
       {getCompanyNameInput()}
-      <button onClick={register}>Create User</button>
+      <button onClick={register}>Sign Up</button>
     </div>
   );
 };

@@ -33,7 +33,7 @@ const LoginInput = ({ setUser, setError }) => {
           setLoginPassword(event.target.value);
         }}
       />
-      <button onClick={login}> Login</button>
+      <button onClick={login}>Sign In</button>
     </div>
   );
 };
