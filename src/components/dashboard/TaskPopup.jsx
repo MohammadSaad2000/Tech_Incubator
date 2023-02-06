@@ -9,8 +9,7 @@ const TaskPopup = ({ user, selectedTask, setIsPopupOpen }) => {
       return;
     }
     setIsPopupOpen(false);
-    submitTask(user, selectedTask, submission);
-    window.location.reload();
+    submitTask(user, selectedTask, submission, () => window.location.reload());
   };
 
   function getFormattedDate(timeStamp) {

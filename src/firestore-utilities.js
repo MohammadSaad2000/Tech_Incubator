@@ -1,4 +1,4 @@
-import { auth, db } from "./firebase-config";
+import { db } from "./firebase-config";
 import {
   doc,
   setDoc,
@@ -28,15 +28,15 @@ export function isTaskCompletedDB(student, task) {
   return isCompleted !== null && isCompleted !== undefined;
 }
 
-export async function submitTask(user, task, submissionLink) {
+export async function submitTask(user, task, submissionLink, callback) {
   const studentRef = doc(db, "students", user.uid);
-  let taskID = task.id;
   await updateDoc(studentRef, {
     taskSubmissions: arrayUnion({
       taskId: task.id,
       submission: submissionLink,
     }),
   });
+  callback();
 }
 
 export function addCompanyDB(user, companyName) {

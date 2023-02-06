@@ -1,9 +1,7 @@
 import SignOut from "./SignOut";
 import TaskTable from "./TaskTable";
 import TaskPopup from "./TaskPopup";
-import { db } from "../../firebase-config";
 import { useState, useEffect } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import {
   getTasksDB,
   isTaskCompletedDB,
@@ -23,7 +21,6 @@ const StudentDashboard = ({ user, logout }) => {
   const [tasks, setTasks] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-  let taskTable = null;
 
   useEffect(() => {
     if (user === null) {

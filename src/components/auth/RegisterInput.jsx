@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { auth, db } from "../../firebase-config";
+import { auth } from "../../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addStudentDB, addCompanyDB } from "../../firestore-utilities";
 
