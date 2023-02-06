@@ -1,6 +1,6 @@
 import { Timestamp } from "@firebase/firestore";
 
-const TableBody = ({ tableData, columns }) => {
+const TableBody = ({ tableData, columns, setIsPopupOpen, setSelectedTask }) => {
   function getFormattedDate(timeStamp) {
     let date = new Date(timeStamp.seconds * 1000);
     return (
@@ -25,9 +25,14 @@ const TableBody = ({ tableData, columns }) => {
     return value;
   }
 
+  function showTaskPopup(task) {
+    setSelectedTask(task);
+    setIsPopupOpen(true);
+  }
+
   function getFormattedRow(data) {
     return (
-      <tr key={data.id}>
+      <tr key={data.id} onClick={() => showTaskPopup(data)}>
         {columns.map(({ accessor }) => {
           let tData = getFormattedValue(data[accessor]);
           return <td key={accessor}>{tData}</td>;

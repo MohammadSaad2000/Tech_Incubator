@@ -1,5 +1,6 @@
 import SignOut from "./SignOut";
 import TaskTable from "./TaskTable";
+import TaskPopup from "./TaskPopup";
 import { db } from "../../firebase-config";
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -20,6 +21,8 @@ const columns = [
 
 const StudentDashboard = ({ user, logout }) => {
   const [tasks, setTasks] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   let taskTable = null;
 
   useEffect(() => {
@@ -30,7 +33,8 @@ const StudentDashboard = ({ user, logout }) => {
       let tasksRes = await getTasksDB();
       let student = await getStudentDB(user);
       tasksRes.forEach((t) => {
-        t.status = isTaskCompletedDB(student, t);
+        let isTaskCompleted = isTaskCompletedDB(student, t);
+        t.status = isTaskCompleted ? "Completed" : "Incomplete";
       });
       setTasks(tasksRes);
     }
@@ -45,7 +49,12 @@ const StudentDashboard = ({ user, logout }) => {
             caption="Tasks Currently Available"
             data={tasks}
             columns={columns}
+            setIsPopupOpen={setIsPopupOpen}
+            setSelectedTask={setSelectedTask}
           />
+        )}
+        {isPopupOpen && (
+          <TaskPopup {...{ user, selectedTask, setIsPopupOpen }} />
         )}
         <SignOut user={user} logout={logout} />
       </div>
